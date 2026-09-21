@@ -82,21 +82,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({
       if (mode === 'signin') {
         const { error } = await signInWithEmail(email, password);
         if (error) {
-          // Provide clean user-friendly messaging
           if (error.message.toLowerCase().includes('invalid login credentials')) {
             setErrorMessage('Invalid email or password. Please try again.');
-          } else if (error.message.toLowerCase().includes('email not confirmed')) {
-            setErrorMessage('Your email address has not been confirmed yet. Please check your inbox.');
           } else {
             setErrorMessage(error.message);
           }
         } else {
-          // Successfully logged in
           onClose();
         }
       } else {
-        // Sign Up
-        const { data, error } = await signUpWithEmail(email, password, name);
+        // Sign Up - auto-confirms and signs in immediately
+        const { error } = await signUpWithEmail(email, password, name);
         if (error) {
           if (error.message.toLowerCase().includes('already registered')) {
             setErrorMessage('An account with this email already exists. Try signing in instead.');
@@ -104,20 +100,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             setErrorMessage(error.message);
           }
         } else {
-          // Check if session was created immediately or confirmation email was sent
-          if (data.session) {
-            // Auto confirmed
-            onClose();
-          } else if (data.user) {
-            // Confirmation email sent
-            setSuccessMessage(
-              'Account created! A confirmation email has been sent to ' +
-                email +
-                '. Please verify your email before signing in.'
-            );
-          } else {
-            onClose();
-          }
+          // Immediately enter application
+          onClose();
         }
       }
     } catch (err: any) {

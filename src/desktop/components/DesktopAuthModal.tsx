@@ -52,10 +52,10 @@ export const DesktopAuthModal: React.FC<DesktopAuthModalProps> = ({
         if (error) {
           setErrorMsg(error.message || 'Failed to create account.');
         } else {
-          setSuccessMsg('Account created! Check your email if verification is required.');
+          setSuccessMsg('Account created! Welcome to SwarTranscript AI.');
           setTimeout(() => {
             onClose();
-          }, 1200);
+          }, 400);
         }
       }
     } catch (err: any) {

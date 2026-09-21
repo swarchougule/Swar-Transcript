@@ -52,17 +52,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUpWithEmail = async (email: string, password: string, fullName?: string) => {
+    const cleanEmail = email.trim();
     const { data, error } = await supabase.auth.signUp({
-      email: email.trim(),
+      email: cleanEmail,
       password,
       options: {
         data: {
           full_name: fullName?.trim(),
         },
-        emailRedirectTo: window.location.origin,
       },
     });
-    return { data, error };
+
+    if (error) {
+      return { data, error };
+    }
+
+    // If an active session is already present, store it and return immediately
+    if (data.session) {
+      setSession(data.session);
+      setUser(data.session.user);
+      return { data, error: null };
+    }
+
+    // Direct fallback: Immediately sign in to establish an active session without email verification
+    const signInRes = await supabase.auth.signInWithPassword({
+      email: cleanEmail,
+      password,
+    });
+
+    if (signInRes.data?.session) {
+      setSession(signInRes.data.session);
+      setUser(signInRes.data.session.user);
+      return { data: signInRes.data, error: null };
+    }
+
+    return { data, error: signInRes.error ?? null };
   };
 
   const signInWithEmail = async (email: string, password: string) => {
