@@ -8,10 +8,11 @@ const corsHeaders = {
 };
 
 interface AiToolkitRequest {
-  action: "summary" | "takeaways" | "chapters" | "notes" | "ask";
+  action: "summary" | "takeaways" | "action_items" | "chapters" | "rewrite" | "translate" | "notes" | "ask";
   transcript: string;
   videoTitle?: string;
   question?: string;
+  targetLanguage?: string;
 }
 
 /**
@@ -39,7 +40,7 @@ function cleanPlainText(raw: string): string {
   text = text.replace(/\\mathrm\{([^}]+)\}/g, "$1");
   text = text.replace(/\\left|\\right/g, "");
   text = text.replace(/\$\$([\s\S]*?)\$\$/g, "$1");
-  text = text.replace(/\$([^\$\n]+)\$/g, "$1");
+  text = text.replace(/\$([^$\n]+)\$/g, "$1");
   text = text.replace(/\\([a-zA-Z]+)/g, "$1");
 
   // 3. Remove HTML tags, converting <br> to newline
@@ -64,7 +65,7 @@ function cleanPlainText(raw: string): string {
   text = text.replace(/_([^_\n]+)_/g, "$1");
 
   // 7. Standardize list bullet points (* item or - item -> • item)
-  text = text.replace(/^[\*\-\+]\s+/gm, "• ");
+  text = text.replace(/^[*+-]\s+/gm, "• ");
 
   // 8. Clean up extra bullet spaces or double bullets
   text = text.replace(/^[•\s]*•\s*/gm, "• ");
@@ -127,7 +128,7 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const { action, transcript, videoTitle = "YouTube Video", question } = body;
+    const { action, transcript, videoTitle = "YouTube Video", question, targetLanguage = "English" } = body;
 
     if (!transcript || typeof transcript !== "string" || transcript.trim().length === 0) {
       return new Response(
@@ -186,6 +187,17 @@ CRITICAL FORMATTING INSTRUCTIONS:
 Remember: DO NOT use asterisks (**) or bold markdown syntax.`;
         break;
 
+      case "action_items":
+        systemInstruction =
+          `You are an executive productivity assistant. Extract clear, actionable tasks, practical next steps, and to-dos from this video transcript. Format the response as a bullet list starting with '• [ ] ' followed by a concise action item. ${STRICT_PLAIN_TEXT_RULES}`;
+        prompt = `Video Title: "${videoTitle}"\n\nTranscript Content:\n${processedTranscript}\n\nTask: Extract 5 to 8 concrete action items. Example format:
+• [ ] Audit existing workflow and list bottlenecks
+• [ ] Set up automated monitoring for key metrics
+• [ ] Review team execution roadmap
+
+Remember: DO NOT use asterisks or markdown bold tags.`;
+        break;
+
       case "chapters":
         systemInstruction =
           `You are a video chapter creator. Review the transcript and generate logical, chronological chapters with timestamps. Format each chapter as a numbered list item: "Number. Title (Timestamp) - Description". ${STRICT_PLAIN_TEXT_RULES}`;
@@ -195,6 +207,18 @@ Remember: DO NOT use asterisks (**) or bold markdown syntax.`;
 3. Key Applications (08:20) - Description
 
 Remember: DO NOT use asterisks, bold tags, or markdown tables.`;
+        break;
+
+      case "rewrite":
+        systemInstruction =
+          `You are a professional editor and copywriter. Rewrite the video transcript's ideas into a compelling, clear, and publication-ready plain text article. Use 3-4 cohesive paragraphs separated by blank lines. ${STRICT_PLAIN_TEXT_RULES}`;
+        prompt = `Video Title: "${videoTitle}"\n\nTranscript Content:\n${processedTranscript}\n\nTask: Rewrite this content into a well-crafted, smooth plain text article. DO NOT use markdown headings (#) or bold asterisks (**).`;
+        break;
+
+      case "translate":
+        systemInstruction =
+          `You are a master multilingual translator. Translate the core ideas, summary, and key insights of the video transcript into ${targetLanguage} using clear, natural, and accurate plain text. ${STRICT_PLAIN_TEXT_RULES}`;
+        prompt = `Video Title: "${videoTitle}"\n\nTarget Language: ${targetLanguage}\n\nTranscript Content:\n${processedTranscript}\n\nTask: Translate the core message into ${targetLanguage} in clean plain text paragraphs or bullet points without asterisks or markdown syntax.`;
         break;
 
       case "notes":

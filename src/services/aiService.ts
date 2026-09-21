@@ -1,6 +1,14 @@
 import { supabase } from '../lib/supabase';
 
-export type AiAction = 'summary' | 'takeaways' | 'chapters' | 'notes' | 'ask';
+export type AiAction =
+  | 'summary'
+  | 'takeaways'
+  | 'action_items'
+  | 'chapters'
+  | 'rewrite'
+  | 'translate'
+  | 'notes'
+  | 'ask';
 
 export interface AiActionResult {
   success: boolean;
@@ -13,7 +21,8 @@ export async function processAiAction(
   action: AiAction,
   transcript: string,
   videoTitle?: string,
-  question?: string
+  question?: string,
+  targetLanguage?: string
 ): Promise<AiActionResult> {
   try {
     const { data: sessionData } = await supabase.auth.getSession();
@@ -44,6 +53,7 @@ export async function processAiAction(
         transcript,
         videoTitle,
         question,
+        targetLanguage,
       },
     });
 

@@ -24,7 +24,7 @@ export function sanitizePlainText(raw: string): string {
   text = text.replace(/\\mathrm\{([^}]+)\}/g, '$1');
   text = text.replace(/\\left|\\right/g, '');
   text = text.replace(/\$\$([\s\S]*?)\$\$/g, '$1');
-  text = text.replace(/\$([^\$\n]+)\$/g, '$1');
+  text = text.replace(/\$([^$\n]+)\$/g, '$1');
   text = text.replace(/\\([a-zA-Z]+)/g, '$1');
 
   // 3. Remove HTML tags, translating <br> to newlines
@@ -49,7 +49,7 @@ export function sanitizePlainText(raw: string): string {
   text = text.replace(/_([^_\n]+)_/g, '$1');
 
   // 7. Standardize list bullet points (* item or - item -> • item)
-  text = text.replace(/^[\*\-\+]\s+/gm, '• ');
+  text = text.replace(/^[*+-]\s+/gm, '• ');
 
   // 8. Clean up extra bullet spaces or double bullets
   text = text.replace(/^[•\s]*•\s*/gm, '• ');
