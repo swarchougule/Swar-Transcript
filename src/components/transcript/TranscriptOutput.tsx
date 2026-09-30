@@ -26,7 +26,7 @@ interface TranscriptOutputProps {
 }
 
 export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
-  initialShowMock = true,
+  initialShowMock = false, // Always default to Empty State in the preview as requested
   realTranscript = null,
   isLoading = false,
 }) => {
@@ -181,7 +181,7 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
     const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
     return parts.map((part, i) =>
       part.toLowerCase() === highlight.toLowerCase() ? (
-        <mark key={i} className="bg-[#8B9A6E]/30 text-[#1B1E19] px-0.5 rounded font-medium">
+        <mark key={i} className="bg-zinc-900 text-white px-1 rounded font-semibold">
           {part}
         </mark>
       ) : (
@@ -196,21 +196,21 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
         {/* Toggle Bar / Mode Indicator */}
         <div className="flex items-center justify-between mb-4 px-1 text-xs text-[#595F52]">
           <div className="flex items-center gap-2">
-            <span className="font-semibold uppercase tracking-wider text-[#767D6E]">
+            <span className="font-extrabold uppercase tracking-wider text-zinc-700">
               Output State:
             </span>
             {isLoading ? (
-              <span className="inline-flex items-center gap-1.5 font-semibold text-[#8B9A6E]">
+              <span className="inline-flex items-center gap-1.5 font-bold text-zinc-900">
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 <span>Processing with Apify...</span>
               </span>
             ) : isReal ? (
-              <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="inline-flex items-center gap-1.5 font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-300">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Live Apify Transcript</span>
               </span>
             ) : (
-              <span className="font-medium text-[#1B1E19]">
+              <span className="font-bold text-zinc-900">
                 {showMock ? 'Sample Preview Transcript' : 'Empty State'}
               </span>
             )}
@@ -220,16 +220,16 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
             <button
               type="button"
               onClick={() => setShowMock(!showMock)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#E8E1D5] hover:bg-[#FAF7F2] font-medium text-[#282C24] transition-colors shadow-warm-sm"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white border border-zinc-300 hover:bg-zinc-100 font-bold text-xs text-zinc-900 transition-all shadow-xs shrink-0 whitespace-nowrap active:scale-[0.98] cursor-pointer"
             >
               {showMock ? (
                 <>
-                  <EyeOff className="w-3.5 h-3.5 text-[#767D6E]" />
+                  <EyeOff className="w-3.5 h-3.5 text-zinc-700 shrink-0" />
                   <span>Show Empty State</span>
                 </>
               ) : (
                 <>
-                  <Eye className="w-3.5 h-3.5 text-[#8B9A6E]" />
+                  <Eye className="w-3.5 h-3.5 text-zinc-900 shrink-0" />
                   <span>Show Sample Transcript</span>
                 </>
               )}
@@ -239,12 +239,12 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
 
         {/* 1. LOADING STATE */}
         {isLoading ? (
-          <div className="rounded-3xl bg-white border border-[#E8E1D5] p-12 sm:p-16 text-center shadow-warm-lg animate-in fade-in duration-300">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-[#8B9A6E]/10 border border-[#8B9A6E]/20 flex items-center justify-center text-[#8B9A6E] mb-5">
-              <Loader2 className="w-8 h-8 animate-spin" />
+          <div className="rounded-3xl bg-white border border-[#E8E1D5] p-12 sm:p-16 text-center shadow-lg animate-in fade-in duration-300">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-white mb-5 shadow-md">
+              <Loader2 className="w-8 h-8 animate-spin text-amber-300" />
             </div>
 
-            <h3 className="text-xl font-bold text-[#1B1E19] mb-2 tracking-tight">
+            <h3 className="text-xl font-extrabold text-[#1B1E19] mb-2 tracking-tight">
               Extracting Transcript...
             </h3>
 
@@ -252,52 +252,52 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
               Connecting to Apify Actor <code className="bg-[#FAF7F2] px-1.5 py-0.5 rounded border border-[#E8E1D5] text-[#1B1E19] font-mono text-xs">streamers/youtube-scraper</code> to process video audio and extract subtitles.
             </p>
 
-            <div className="inline-flex items-center gap-2 text-xs font-medium text-[#8B9A6E] bg-[#8B9A6E]/10 px-3 py-1.5 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-[#8B9A6E] animate-pulse" />
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-zinc-900 bg-zinc-100 px-3.5 py-1.5 rounded-full border border-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-zinc-900 animate-pulse" />
               <span>This usually takes 15–30 seconds</span>
             </div>
           </div>
         ) : !showMock && !isReal ? (
-          /* 2. EMPTY STATE */
-          <div className="rounded-3xl bg-white border border-[#E8E1D5] p-10 sm:p-14 text-center shadow-warm-sm transition-all">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-[#F7F2EB] border border-[#E8E1D5] flex items-center justify-center text-[#8B9A6E] mb-5 shadow-warm-sm">
-              <FileText className="w-8 h-8 stroke-[1.5]" />
+          /* 2. ALWAYS DEFAULTED EMPTY STATE */
+          <div className="rounded-3xl bg-white border border-[#E8E1D5] p-10 sm:p-14 text-center shadow-md transition-all animate-slide-up">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-white mb-5 shadow-md group hover:scale-105 transition-transform duration-300">
+              <FileText className="w-8 h-8 stroke-[1.75] text-amber-300" />
             </div>
 
-            <h3 className="text-xl font-bold text-[#1B1E19] mb-2 tracking-tight">
+            <h3 className="text-xl font-extrabold text-[#1B1E19] mb-2 tracking-tight">
               Your transcript will appear here
             </h3>
 
             <p className="text-sm text-[#595F52] max-w-md mx-auto leading-relaxed mb-6">
-              Paste a YouTube video link above to generate your transcript.
+              Paste a YouTube video link above to generate your transcript, or test with a sample video preview below.
             </p>
 
             <button
               type="button"
               onClick={() => setShowMock(true)}
-              className="inline-flex items-center gap-2 px-4.5 py-2.5 text-xs font-semibold text-[#5D6B44] bg-[#8B9A6E]/15 hover:bg-[#8B9A6E]/25 border border-[#8B9A6E]/30 rounded-xl transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 text-xs sm:text-sm font-bold text-white bg-zinc-900 hover:bg-zinc-800 active:scale-[0.98] rounded-xl shadow-md border border-zinc-800 transition-all shrink-0 whitespace-nowrap cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#8B9A6E]" />
+              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
               <span>Preview Sample Transcript</span>
             </button>
           </div>
         ) : (
           /* 3. TRANSCRIPT CARD (REAL OR MOCK) */
-          <div className="rounded-3xl bg-white border border-[#E8E1D5] shadow-warm-lg overflow-hidden transition-all animate-in fade-in duration-300">
+          <div className="rounded-3xl bg-white border border-[#E8E1D5] shadow-xl overflow-hidden transition-all animate-in fade-in duration-300">
             {/* Header: Video Details & Key Stats */}
             <div className="p-6 sm:p-8 bg-[#FAF7F2] border-b border-[#E8E1D5]">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                 <div className="space-y-1.5 flex-1">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-[#8B9A6E]/15 border border-[#8B9A6E]/30 text-[11px] font-semibold text-[#5D6B44] uppercase tracking-wider">
+                  <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-md bg-zinc-900 text-white text-[11px] font-bold uppercase tracking-wider shadow-xs">
                     <span>{isReal ? 'Live Generated Transcript' : 'Sample Transcript Preview'}</span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold text-[#1B1E19] tracking-tight leading-snug">
+                  <h3 className="text-lg sm:text-xl font-extrabold text-[#1B1E19] tracking-tight leading-snug">
                     {activeTranscript.video.title}
                   </h3>
 
                   <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-[#595F52]">
-                    <span className="font-semibold text-[#282C24]">
+                    <span className="font-bold text-[#282C24]">
                       {activeTranscript.video.channel}
                     </span>
                     <span>•</span>
@@ -305,21 +305,21 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
                   </div>
                 </div>
 
-                {/* Primary Action Buttons (Copy & Download) */}
+                {/* Primary Dark Action Buttons (Copy & Download) */}
                 <div className="flex items-center gap-2.5 shrink-0 self-start">
                   <button
                     type="button"
                     onClick={handleCopy}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#1B1E19] bg-white border border-[#E8E1D5] hover:bg-[#F7F2EB] active:scale-[0.98] rounded-xl shadow-warm-sm transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold text-zinc-900 bg-white border border-zinc-300 hover:bg-zinc-100 hover:border-zinc-400 active:scale-[0.98] rounded-xl shadow-xs transition-all cursor-pointer"
                   >
                     {copied ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-[#8B9A6E]" />
-                        <span className="text-[#5D6B44]">Copied!</span>
+                        <Check className="w-4 h-4 text-emerald-600" />
+                        <span className="text-emerald-700 font-bold">Copied!</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5 text-[#595F52]" />
+                        <Copy className="w-4 h-4 text-zinc-700" />
                         <span>Copy</span>
                       </>
                     )}
@@ -329,36 +329,39 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
                     <button
                       type="button"
                       onClick={() => setDownloadMenuOpen(!downloadMenuOpen)}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-white bg-[#8B9A6E] hover:bg-[#758458] active:scale-[0.98] rounded-xl shadow-warm-sm transition-all"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-zinc-900 hover:bg-zinc-800 active:scale-[0.98] rounded-xl shadow-md shadow-zinc-950/20 border border-zinc-800 transition-all cursor-pointer whitespace-nowrap"
                     >
-                      <Download className="w-3.5 h-3.5" />
+                      <Download className="w-4 h-4 text-amber-300" />
                       <span>Download</span>
-                      <ChevronDown className="w-3 h-3 opacity-80" />
+                      <ChevronDown className="w-3.5 h-3.5 opacity-80" />
                     </button>
 
                     {/* Download Format Dropdown Menu */}
                     {downloadMenuOpen && (
-                      <div className="absolute right-0 mt-2 w-44 rounded-2xl bg-white border border-[#E8E1D5] shadow-warm-lg py-1.5 z-20 animate-in fade-in zoom-in-95 duration-150">
+                      <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white border border-zinc-300 shadow-xl py-2 z-20 animate-in fade-in zoom-in-95 duration-150">
                         <button
+                          type="button"
                           onClick={() => handleDownload('txt')}
-                          className="w-full text-left px-4 py-2 text-xs font-medium text-[#1B1E19] hover:bg-[#F7F2EB] flex items-center justify-between"
+                          className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#1B1E19] hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                         >
                           <span>Plain Text (.txt)</span>
-                          <span className="text-[10px] text-[#767D6E]">Clean</span>
+                          <span className="text-[10px] text-[#767D6E] uppercase font-semibold">Clean</span>
                         </button>
                         <button
+                          type="button"
                           onClick={() => handleDownload('md')}
-                          className="w-full text-left px-4 py-2 text-xs font-medium text-[#1B1E19] hover:bg-[#F7F2EB] flex items-center justify-between"
+                          className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#1B1E19] hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                         >
                           <span>Markdown (.md)</span>
-                          <span className="text-[10px] text-[#767D6E]">Structured</span>
+                          <span className="text-[10px] text-[#767D6E] uppercase font-semibold">Structured</span>
                         </button>
                         <button
+                          type="button"
                           onClick={() => handleDownload('srt')}
-                          className="w-full text-left px-4 py-2 text-xs font-medium text-[#1B1E19] hover:bg-[#F7F2EB] flex items-center justify-between"
+                          className="w-full text-left px-4 py-2.5 text-xs font-bold text-[#1B1E19] hover:bg-zinc-100 flex items-center justify-between cursor-pointer"
                         >
                           <span>Subtitles (.srt)</span>
-                          <span className="text-[10px] text-[#767D6E]">Timed</span>
+                          <span className="text-[10px] text-[#767D6E] uppercase font-semibold">Timed</span>
                         </button>
                       </div>
                     )}
@@ -368,49 +371,49 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
 
               {/* Stat Badges: Duration, Word count, Character count */}
               <div className="mt-5 pt-4 border-t border-[#EFE9DE] grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/70 border border-[#E8E1D5]">
-                  <Clock className="w-4 h-4 text-[#8B9A6E]" />
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/80 border border-[#E8E1D5]">
+                  <Clock className="w-4 h-4 text-zinc-900" />
                   <div>
-                    <div className="text-[10px] text-[#767D6E] uppercase font-semibold">
+                    <div className="text-[10px] text-[#767D6E] uppercase font-bold">
                       Duration
                     </div>
-                    <div className="font-bold text-[#1B1E19]">
+                    <div className="font-extrabold text-[#1B1E19]">
                       {activeTranscript.video.duration}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/70 border border-[#E8E1D5]">
-                  <Type className="w-4 h-4 text-[#8B9A6E]" />
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/80 border border-[#E8E1D5]">
+                  <Type className="w-4 h-4 text-zinc-900" />
                   <div>
-                    <div className="text-[10px] text-[#767D6E] uppercase font-semibold">
+                    <div className="text-[10px] text-[#767D6E] uppercase font-bold">
                       Word Count
                     </div>
-                    <div className="font-bold text-[#1B1E19]">
+                    <div className="font-extrabold text-[#1B1E19]">
                       {activeTranscript.video.wordCount.toLocaleString()} words
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/70 border border-[#E8E1D5]">
-                  <Hash className="w-4 h-4 text-[#8B9A6E]" />
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/80 border border-[#E8E1D5]">
+                  <Hash className="w-4 h-4 text-zinc-900" />
                   <div>
-                    <div className="text-[10px] text-[#767D6E] uppercase font-semibold">
+                    <div className="text-[10px] text-[#767D6E] uppercase font-bold">
                       Characters
                     </div>
-                    <div className="font-bold text-[#1B1E19]">
+                    <div className="font-extrabold text-[#1B1E19]">
                       {activeTranscript.video.characterCount.toLocaleString()} chars
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/70 border border-[#E8E1D5]">
-                  <Sparkles className="w-4 h-4 text-[#8B9A6E]" />
+                <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/80 border border-[#E8E1D5]">
+                  <Sparkles className="w-4 h-4 text-zinc-900" />
                   <div>
-                    <div className="text-[10px] text-[#767D6E] uppercase font-semibold">
+                    <div className="text-[10px] text-[#767D6E] uppercase font-bold">
                       Source
                     </div>
-                    <div className="font-bold text-[#5D6B44]">
+                    <div className="font-extrabold text-zinc-900">
                       {isReal ? 'Apify Scraper' : 'Sample Data'}
                     </div>
                   </div>
@@ -427,12 +430,13 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search within transcript..."
-                  className="w-full pl-9 pr-8 py-2 text-xs bg-[#FDFBF7] text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#8B9A6E] focus:bg-white"
+                  className="w-full pl-9 pr-8 py-2 text-xs bg-[#FDFBF7] text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-xl focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:bg-white font-medium"
                 />
                 {searchQuery && (
                   <button
+                    type="button"
                     onClick={() => setSearchQuery('')}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[#767D6E] hover:text-[#1B1E19]"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-bold text-[#767D6E] hover:text-[#1B1E19]"
                   >
                     ×
                   </button>
@@ -441,17 +445,17 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
 
               <div className="flex items-center justify-between w-full sm:w-auto gap-4 text-xs text-[#595F52]">
                 {searchQuery && (
-                  <span className="font-medium text-[#5D6B44] bg-[#8B9A6E]/10 px-2 py-1 rounded-md border border-[#8B9A6E]/20">
+                  <span className="font-bold text-white bg-zinc-900 px-2.5 py-1 rounded-md">
                     {matchCount} {matchCount === 1 ? 'match' : 'matches'} found
                   </span>
                 )}
 
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                <label className="inline-flex items-center gap-2 cursor-pointer select-none font-semibold">
                   <input
                     type="checkbox"
                     checked={showTimestamps}
                     onChange={(e) => setShowTimestamps(e.target.checked)}
-                    className="rounded border-[#E8E1D5] text-[#8B9A6E] focus:ring-[#8B9A6E] w-3.5 h-3.5 accent-[#8B9A6E]"
+                    className="rounded border-[#E8E1D5] text-zinc-900 focus:ring-zinc-900 w-3.5 h-3.5 accent-zinc-900 cursor-pointer"
                   />
                   <span className="text-[#282C24]">Show Timestamps</span>
                 </label>
@@ -468,16 +472,16 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
                 filteredSegments.map((segment) => (
                   <div
                     key={segment.id}
-                    className="pt-5 first:pt-0 group hover:bg-[#FAF7F2]/60 p-3 rounded-2xl transition-colors"
+                    className="pt-5 first:pt-0 group hover:bg-[#FAF7F2]/80 p-3 rounded-2xl transition-colors"
                   >
                     <div className="flex items-center gap-2.5 mb-1.5">
                       {showTimestamps && (
-                        <span className="inline-flex items-center text-[11px] font-mono font-semibold px-2 py-0.5 rounded-md bg-[#F7F2EB] text-[#5D6B44] border border-[#E8E1D5]">
+                        <span className="inline-flex items-center text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md bg-zinc-900 text-white shadow-xs">
                           {segment.timestamp}
                         </span>
                       )}
                       {segment.speaker && (
-                        <span className="text-xs font-semibold text-[#282C24]">
+                        <span className="text-xs font-extrabold text-[#282C24]">
                           {segment.speaker}
                         </span>
                       )}
@@ -500,3 +504,4 @@ export const TranscriptOutput: React.FC<TranscriptOutputProps> = ({
     </section>
   );
 };
+

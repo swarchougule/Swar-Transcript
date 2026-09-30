@@ -46,8 +46,8 @@ export const Features: React.FC = () => {
     <section id="features" className="py-16 sm:py-24 bg-[#F2EBE1]/40 border-y border-[#E8E1D5] scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B9A6E]/15 border border-[#8B9A6E]/30 text-xs font-semibold text-[#5D6B44] uppercase tracking-wider mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-16 animate-slide-up">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-zinc-900 text-white text-xs font-bold uppercase tracking-wider mb-3 shadow-xs">
             <span>Core Capabilities</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1B1E19] tracking-tight">
@@ -65,13 +65,13 @@ export const Features: React.FC = () => {
             return (
               <div
                 key={feature.title}
-                className="group relative bg-white rounded-3xl border border-[#E8E1D5] p-7 sm:p-8 shadow-warm-sm hover:shadow-warm-md hover:border-[#8B9A6E]/50 transition-all duration-200"
+                className="group relative bg-white rounded-3xl border border-[#E8E1D5] p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-zinc-400 hover:-translate-y-1.5 transition-all duration-300"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[#F7F2EB] border border-[#E8E1D5] flex items-center justify-center text-[#8B9A6E] mb-6 group-hover:bg-[#8B9A6E] group-hover:text-white transition-all duration-200">
+                <div className="w-12 h-12 rounded-2xl bg-[#F7F2EB] border border-[#E8E1D5] flex items-center justify-center text-zinc-900 mb-6 group-hover:bg-zinc-900 group-hover:text-white transition-all duration-300 shadow-xs">
                   <Icon className="w-5 h-5" />
                 </div>
 
-                <h3 className="text-lg font-bold text-[#1B1E19] mb-2.5 tracking-tight">
+                <h3 className="text-lg font-extrabold text-[#1B1E19] mb-2.5 tracking-tight">
                   {feature.title}
                 </h3>
 
@@ -86,3 +86,4 @@ export const Features: React.FC = () => {
     </section>
   );
 };
+

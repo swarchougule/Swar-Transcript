@@ -5,13 +5,14 @@
 @layer base {
   :root {
     --bg-primary: #F7F2EB;
-    --accent-sage: #8B9A6E;
+    --accent-dark: #18181B;
   }
 
   body {
     background-color: #F7F2EB;
     color: #1B1E19;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
 
   /* Custom subtle scrollbar */
@@ -27,8 +28,58 @@
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #8B9A6E;
+    background: #18181B;
   }
+}
+
+/* Keyframe animations for rich aesthetic throughout the site */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @layer utilities {
@@ -36,3 +87,17 @@
     text-wrap: balance;
   }
 }
+
+/* Dark Button Premium Effects */
+.btn-dark-primary {
+  @apply relative overflow-hidden bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-950 text-white font-bold border border-zinc-800/90 shadow-md shadow-zinc-950/20 hover:shadow-xl hover:shadow-zinc-950/30 active:scale-[0.98] transition-all duration-200 cursor-pointer;
+}
+
+.btn-dark-secondary {
+  @apply bg-white hover:bg-zinc-100 text-zinc-900 font-semibold border border-zinc-300 hover:border-zinc-400 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200 cursor-pointer;
+}
+
+.card-hover-effect {
+  @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:border-zinc-400/60;
+}
+

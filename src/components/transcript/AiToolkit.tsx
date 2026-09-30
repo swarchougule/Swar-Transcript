@@ -134,11 +134,11 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#8B9A6E]/15 border border-[#8B9A6E]/30 flex items-center justify-center text-[#5D6B44]">
-            <Sparkles className="w-4 h-4 text-[#8B9A6E]" />
+          <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-white shadow-sm">
+            <Sparkles className="w-4 h-4 text-amber-300" />
           </div>
           <div>
-            <h4 className="text-base font-bold text-[#1B1E19] tracking-tight">
+            <h4 className="text-base font-extrabold text-[#1B1E19] tracking-tight">
               Groq AI Toolkit
             </h4>
             <p className="text-xs text-[#595F52]">
@@ -147,14 +147,14 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
           </div>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF7F2] border border-[#E8E1D5] text-[11px] font-semibold text-[#5D6B44] self-start sm:self-auto">
-          <Sparkles className="w-3 h-3 text-[#8B9A6E]" />
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 text-white text-[11px] font-bold self-start sm:self-auto shadow-xs border border-zinc-800">
+          <Sparkles className="w-3 h-3 text-amber-300" />
           <span>Powered by Groq LPUs (Llama 3.3)</span>
         </div>
       </div>
 
       {/* Tabs Bar */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-[#EFE9DE]">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2.5 scrollbar-none border-b border-[#EFE9DE]">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -165,16 +165,16 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-150 ${
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? 'bg-[#8B9A6E] text-white shadow-warm-sm'
-                  : 'text-[#595F52] hover:text-[#1B1E19] hover:bg-[#FAF7F2]'
+                  ? 'bg-zinc-900 text-white shadow-md shadow-zinc-950/20 border border-zinc-800'
+                  : 'text-zinc-700 hover:text-zinc-900 hover:bg-zinc-200/60'
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
+              <Icon className="w-4 h-4" />
               <span>{tab.label}</span>
               {isCached && !isActive && (
-                <span className="w-1.5 h-1.5 rounded-full bg-[#8B9A6E]" />
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
               )}
             </button>
           );
@@ -188,8 +188,8 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
             {/* 1. If currently loading */}
             {loadingAction === activeTab ? (
               <div className="rounded-2xl bg-[#FAF7F2] border border-[#E8E1D5] p-8 sm:p-12 text-center animate-in fade-in duration-200">
-                <Loader2 className="w-7 h-7 text-[#8B9A6E] animate-spin mx-auto mb-3" />
-                <h5 className="text-sm font-bold text-[#1B1E19] mb-1">
+                <Loader2 className="w-8 h-8 text-zinc-900 animate-spin mx-auto mb-3" />
+                <h5 className="text-sm font-extrabold text-[#1B1E19] mb-1">
                   Groq is analyzing the transcript...
                 </h5>
                 <p className="text-xs text-[#595F52] max-w-sm mx-auto leading-relaxed">
@@ -202,7 +202,7 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
                   <div className="flex-1 space-y-2">
-                    <div className="font-semibold text-red-900">
+                    <div className="font-bold text-red-900">
                       AI Generation Notice
                     </div>
                     <p className="leading-relaxed">{errorMap[activeTab]}</p>
@@ -212,14 +212,14 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                           💡 <strong>Setup Step:</strong> Please add your <code className="bg-red-100 px-1 py-0.5 rounded font-mono">GROQ_API_KEY</code> secret in Supabase under <strong>Edge Functions → Secrets</strong>.
                         </div>
                         <p className="text-[11px] text-[#595F52]">
-                          You can get an instant free API key from <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" className="text-[#5D6B44] underline font-semibold">Groq Console</a>.
+                          You can get an instant free API key from <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" className="text-zinc-900 underline font-bold">Groq Console</a>.
                         </p>
                       </div>
                     )}
                     <button
                       type="button"
                       onClick={() => handleGenerate(activeTab)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-red-300 text-xs font-semibold text-red-700 hover:bg-red-50 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-900 text-white text-xs font-bold hover:bg-zinc-800 transition-colors shadow-sm cursor-pointer"
                     >
                       <RotateCcw className="w-3.5 h-3.5" />
                       <span>Try Again</span>
@@ -232,10 +232,10 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
               <div className="rounded-2xl bg-[#FAF7F2] border border-[#E8E1D5] p-6 sm:p-7 animate-in fade-in duration-200">
                 <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E8E1D5]">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#1B1E19] uppercase tracking-wider">
+                    <span className="text-xs font-extrabold text-[#1B1E19] uppercase tracking-wider">
                       {tabs.find((t) => t.id === activeTab)?.label}
                     </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-[#8B9A6E]/15 text-[#5D6B44] font-medium">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 text-white font-bold">
                       Groq Verified
                     </span>
                   </div>
@@ -244,16 +244,16 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                     <button
                       type="button"
                       onClick={() => handleCopy(cache[activeTab]!, activeTab)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#1B1E19] bg-white border border-[#E8E1D5] hover:bg-[#F7F2EB] rounded-xl shadow-warm-sm transition-all"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#1B1E19] bg-white border border-zinc-300 hover:bg-zinc-100 rounded-xl shadow-xs transition-all cursor-pointer"
                     >
                       {copiedAction === activeTab ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-[#8B9A6E]" />
-                          <span className="text-[#5D6B44]">Copied!</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          <span className="text-emerald-700 font-bold">Copied!</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3.5 h-3.5 text-[#595F52]" />
+                          <Copy className="w-3.5 h-3.5 text-zinc-700" />
                           <span>Copy</span>
                         </>
                       )}
@@ -262,10 +262,10 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                     <button
                       type="button"
                       onClick={() => handleGenerate(activeTab)}
-                      className="p-1.5 text-[#767D6E] hover:text-[#1B1E19] hover:bg-white rounded-lg transition-colors"
+                      className="p-2 text-zinc-700 hover:text-black hover:bg-white rounded-xl transition-colors cursor-pointer"
                       title="Regenerate with Groq"
                     >
-                      <RotateCcw className="w-3.5 h-3.5" />
+                      <RotateCcw className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -275,15 +275,15 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                 </div>
               </div>
             ) : (
-              /* 4. Not yet generated (Empty CTA state) */
-              <div className="rounded-2xl bg-[#FAF7F2]/70 border border-dashed border-[#E8E1D5] p-8 text-center">
-                <div className="w-10 h-10 rounded-xl bg-white border border-[#E8E1D5] flex items-center justify-center text-[#8B9A6E] mx-auto mb-3 shadow-warm-sm">
-                  <Sparkles className="w-5 h-5" />
+              /* 4. Not yet generated (Clean CTA state with fixed overflow & responsive dark button) */
+              <div className="rounded-2xl bg-[#FAF7F2]/80 border border-dashed border-zinc-300 p-8 sm:p-10 text-center animate-slide-up">
+                <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-white mx-auto mb-4 shadow-md">
+                  <Sparkles className="w-6 h-6 text-amber-300" />
                 </div>
-                <h5 className="text-sm font-bold text-[#1B1E19] mb-1">
+                <h5 className="text-base font-extrabold text-[#1B1E19] mb-1.5">
                   Generate {tabs.find((t) => t.id === activeTab)?.label}
                 </h5>
-                <p className="text-xs text-[#595F52] max-w-sm mx-auto mb-4 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#595F52] max-w-md mx-auto mb-6 leading-relaxed">
                   {activeTab === 'summary' &&
                     'Produce an executive, easy-to-read summary capturing the core narrative and takeaways.'}
                   {activeTab === 'takeaways' &&
@@ -293,14 +293,18 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                   {activeTab === 'notes' &&
                     'Create structured study and reference notes with concepts and bullet points.'}
                 </p>
-                <button
-                  type="button"
-                  onClick={() => handleGenerate(activeTab)}
-                  className="inline-flex items-center gap-2 px-4.5 py-2.5 text-xs font-semibold text-white bg-[#8B9A6E] hover:bg-[#758458] active:scale-[0.98] rounded-xl shadow-warm-sm transition-all"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-white/90" />
-                  <span>Generate with Groq</span>
-                </button>
+
+                {/* Primary Action Button properly formatted & centered without overflow */}
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => handleGenerate(activeTab)}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 text-sm font-bold text-white bg-zinc-900 hover:bg-zinc-800 active:scale-[0.98] rounded-2xl shadow-md shadow-zinc-950/20 border border-zinc-800 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                  >
+                    <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+                    <span>Generate with Groq</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -316,16 +320,16 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                   onChange={(e) => setQuestion(e.target.value)}
                   disabled={asking}
                   placeholder="Ask any question about this video (e.g. What were the key conclusions?)..."
-                  className="w-full pl-4 pr-12 py-3 text-xs sm:text-sm bg-white text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8B9A6E] focus:border-transparent shadow-warm-sm disabled:opacity-60 transition-all"
+                  className="w-full pl-4 pr-14 py-3.5 text-xs sm:text-sm bg-white text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-2xl focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent shadow-xs disabled:opacity-60 transition-all font-medium"
                 />
                 <button
                   type="submit"
                   disabled={asking || !question.trim()}
-                  className="absolute right-2 p-2 rounded-xl bg-[#8B9A6E] hover:bg-[#758458] text-white disabled:opacity-40 disabled:cursor-not-allowed shadow-warm-sm transition-all"
+                  className="absolute right-2 p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white disabled:opacity-40 disabled:cursor-not-allowed shadow-md border border-zinc-800 transition-all cursor-pointer"
                   aria-label="Send question"
                 >
                   {asking ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-amber-300" />
                   ) : (
                     <Send className="w-4 h-4" />
                   )}
@@ -336,8 +340,8 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
             {/* Quick Starter Question Chips */}
             {qaHistory.length === 0 && (
               <div className="flex flex-wrap items-center gap-2 text-xs text-[#595F52] pt-1">
-                <span className="flex items-center gap-1 text-[#767D6E] font-medium">
-                  <HelpCircle className="w-3.5 h-3.5" />
+                <span className="flex items-center gap-1 text-zinc-700 font-bold">
+                  <HelpCircle className="w-3.5 h-3.5 text-zinc-900" />
                   <span>Suggestions:</span>
                 </span>
                 {[
@@ -350,7 +354,7 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                     type="button"
                     onClick={() => handleAskSubmit(undefined, sug)}
                     disabled={asking}
-                    className="px-2.5 py-1 rounded-lg bg-[#FAF7F2] hover:bg-[#EAE3D6] border border-[#E8E1D5] text-[#282C24] transition-colors disabled:opacity-60"
+                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-zinc-900 hover:text-white border border-zinc-300 text-zinc-800 font-semibold transition-all shadow-xs cursor-pointer disabled:opacity-60"
                   >
                     "{sug}"
                   </button>
@@ -379,12 +383,12 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                 {qaHistory.map((item) => (
                   <div
                     key={item.id}
-                    className="rounded-2xl bg-[#FAF7F2] border border-[#E8E1D5] p-5 shadow-warm-sm animate-in fade-in duration-200"
+                    className="rounded-2xl bg-[#FAF7F2] border border-[#E8E1D5] p-5 shadow-xs animate-in fade-in duration-200"
                   >
                     {/* User Question */}
                     <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-[#E8E1D5]">
-                      <div className="flex items-center gap-2 font-semibold text-xs text-[#1B1E19]">
-                        <span className="w-5 h-5 rounded-md bg-[#8B9A6E]/20 text-[#5D6B44] flex items-center justify-center font-bold text-[10px]">
+                      <div className="flex items-center gap-2 font-bold text-xs text-[#1B1E19]">
+                        <span className="w-5 h-5 rounded-md bg-zinc-900 text-white flex items-center justify-center font-bold text-[10px]">
                           Q
                         </span>
                         <span>{item.question}</span>
@@ -395,7 +399,7 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                     </div>
 
                     {/* Groq Answer */}
-                    <div className="text-xs sm:text-sm text-[#282C24] leading-relaxed whitespace-pre-line pl-7">
+                    <div className="text-xs sm:text-sm text-[#282C24] leading-relaxed whitespace-pre-line pl-7 font-normal">
                       {sanitizePlainText(item.answer)}
                     </div>
 
@@ -404,16 +408,16 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
                       <button
                         type="button"
                         onClick={() => handleCopy(item.answer, item.id)}
-                        className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#595F52] hover:text-[#1B1E19] transition-colors"
+                        className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#595F52] hover:text-[#1B1E19] transition-colors cursor-pointer"
                       >
                         {copiedAction === item.id ? (
                           <>
-                            <Check className="w-3 h-3 text-[#8B9A6E]" />
-                            <span className="text-[#5D6B44]">Answer Copied</span>
+                            <Check className="w-3 h-3 text-emerald-600" />
+                            <span className="text-emerald-700">Answer Copied</span>
                           </>
                         ) : (
                           <>
-                            <Copy className="w-3 h-3 text-[#767D6E]" />
+                            <Copy className="w-3 h-3 text-zinc-700" />
                             <span>Copy Answer</span>
                           </>
                         )}
@@ -429,3 +433,4 @@ export const AiToolkit: React.FC<AiToolkitProps> = ({ transcript }) => {
     </div>
   );
 };
+

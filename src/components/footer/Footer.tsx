@@ -22,13 +22,13 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-7 h-7 rounded-lg bg-[#8B9A6E] flex items-center justify-center text-white">
-                <Sparkles className="w-4 h-4" />
+              <div className="w-8 h-8 rounded-xl bg-zinc-900 flex items-center justify-center text-white shadow-md">
+                <Sparkles className="w-4 h-4 text-amber-300" />
               </div>
-              <span className="text-lg font-bold text-[#1B1E19]">
+              <span className="text-xl font-extrabold text-[#1B1E19]">
                 SwarTranscript
               </span>
-              <span className="px-1.5 py-0.5 text-[10px] font-semibold uppercase bg-[#8B9A6E]/15 text-[#5D6B44] border border-[#8B9A6E]/30 rounded">
+              <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-zinc-900 text-white rounded shadow-xs">
                 AI
               </span>
             </div>
@@ -38,22 +38,22 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6 text-xs font-medium text-[#595F52]">
+          <nav className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-[#595F52]">
             <button
               onClick={() => scrollTo()}
-              className="hover:text-[#1B1E19] transition-colors"
+              className="hover:text-zinc-900 transition-colors cursor-pointer"
             >
               Home
             </button>
             <button
               onClick={() => scrollTo('features')}
-              className="hover:text-[#1B1E19] transition-colors"
+              className="hover:text-zinc-900 transition-colors cursor-pointer"
             >
               Features
             </button>
             <button
               onClick={() => scrollTo('faq')}
-              className="hover:text-[#1B1E19] transition-colors"
+              className="hover:text-zinc-900 transition-colors cursor-pointer"
             >
               FAQ
             </button>
@@ -63,7 +63,7 @@ export const Footer: React.FC = () => {
                 e.preventDefault();
                 alert('Privacy Policy information is part of the future production documentation.');
               }}
-              className="hover:text-[#1B1E19] transition-colors"
+              className="hover:text-zinc-900 transition-colors"
             >
               Privacy Policy
             </a>
@@ -73,7 +73,7 @@ export const Footer: React.FC = () => {
                 e.preventDefault();
                 alert('Terms of Service information is part of the future production documentation.');
               }}
-              className="hover:text-[#1B1E19] transition-colors"
+              className="hover:text-zinc-900 transition-colors"
             >
               Terms
             </a>
@@ -83,7 +83,7 @@ export const Footer: React.FC = () => {
         {/* Bottom copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#767D6E] gap-3 text-center sm:text-left">
           <p>© {currentYear} SwarTranscript AI. All rights reserved.</p>
-          <p className="text-[11px]">
+          <p className="text-[11px] font-medium">
             Designed for rapid and accessible video transcription.
           </p>
         </div>
@@ -91,3 +91,4 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+

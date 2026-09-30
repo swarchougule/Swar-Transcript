@@ -123,7 +123,7 @@ export const Home: React.FC = () => {
 
         {/* Transcript Output Section (Empty State, Mock Transcript & Live Apify Transcript) */}
         <TranscriptOutput
-          initialShowMock={true}
+          initialShowMock={false}
           realTranscript={activeTranscript}
           isLoading={isGenerating}
         />

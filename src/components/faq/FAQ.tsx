@@ -50,8 +50,8 @@ export const FAQ: React.FC = () => {
     <section id="faq" className="py-16 sm:py-24 scroll-mt-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8B9A6E]/15 border border-[#8B9A6E]/30 text-xs font-semibold text-[#5D6B44] uppercase tracking-wider mb-3">
+        <div className="text-center mb-14 animate-slide-up">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-zinc-900 text-white text-xs font-bold uppercase tracking-wider mb-3 shadow-xs">
             <span>Got Questions?</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1B1E19] tracking-tight">
@@ -69,20 +69,20 @@ export const FAQ: React.FC = () => {
             return (
               <div
                 key={item.question}
-                className="rounded-2xl bg-white border border-[#E8E1D5] overflow-hidden transition-all duration-200"
+                className="rounded-2xl bg-white border border-[#E8E1D5] overflow-hidden transition-all duration-200 shadow-xs hover:border-zinc-400"
               >
                 <button
                   type="button"
                   onClick={() => toggleItem(index)}
-                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8B9A6E]"
+                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base font-bold text-[#1B1E19] tracking-tight">
+                  <span className="text-base font-extrabold text-[#1B1E19] tracking-tight">
                     {item.question}
                   </span>
                   <div
-                    className={`w-7 h-7 rounded-full bg-[#F7F2EB] flex items-center justify-center shrink-0 text-[#5D6B44] transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 bg-[#8B9A6E]/20 text-[#8B9A6E]' : ''
+                    className={`w-7 h-7 rounded-full bg-[#F7F2EB] flex items-center justify-center shrink-0 text-zinc-900 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 bg-zinc-900 text-white' : ''
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -102,3 +102,4 @@ export const FAQ: React.FC = () => {
     </section>
   );
 };
+

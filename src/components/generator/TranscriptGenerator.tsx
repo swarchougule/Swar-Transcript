@@ -60,16 +60,16 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
     <section id="generator-section" className="relative scroll-mt-28 py-4 sm:py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">
         {/* Main Card Container */}
-        <div className="relative rounded-3xl bg-white border border-[#E8E1D5] shadow-warm-lg p-6 sm:p-10 transition-all duration-300 hover:border-[#D8CFBF]">
+        <div className="relative rounded-3xl bg-white border border-[#E8E1D5] shadow-lg p-6 sm:p-10 transition-all duration-300 hover:border-zinc-400/80">
           {/* Subtle Top Accent Stripe */}
-          <div className="absolute top-0 inset-x-8 h-1 bg-gradient-to-r from-transparent via-[#8B9A6E]/40 to-transparent rounded-t-full" />
+          <div className="absolute top-0 inset-x-8 h-1 bg-gradient-to-r from-transparent via-zinc-800 to-transparent rounded-t-full" />
 
           {/* Form Header */}
           <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <label
                 htmlFor="youtube-url-input"
-                className="block text-sm sm:text-base font-semibold text-[#1B1E19]"
+                className="block text-sm sm:text-base font-extrabold text-[#1B1E19]"
               >
                 YouTube Video URL
               </label>
@@ -80,11 +80,11 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
 
             {/* Live URL status indicator */}
             {url && (
-              <div className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-[#FAF7F2] border border-[#E8E1D5]">
+              <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-zinc-100 border border-zinc-300">
                 {isValid ? (
                   <>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#8B9A6E]" />
-                    <span className="text-[#5D6B44]">Valid YouTube Link</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-zinc-900">Valid YouTube Link</span>
                   </>
                 ) : (
                   <>
@@ -116,7 +116,7 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                     if (!touched) setTouched(true);
                   }}
                   placeholder="https://youtube.com/watch?v=..."
-                  className="w-full pl-12 pr-10 py-4 text-sm sm:text-base bg-[#FDFBF7] text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#8B9A6E] focus:border-transparent focus:bg-white transition-all duration-200"
+                  className="w-full pl-12 pr-10 py-4 text-sm sm:text-base bg-[#FDFBF7] text-[#1B1E19] placeholder:text-[#989F90] border border-[#E8E1D5] rounded-2xl focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent focus:bg-white transition-all duration-200"
                   aria-label="YouTube Video URL"
                 />
 
@@ -132,11 +132,11 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                 )}
               </div>
 
-              {/* Primary Action Button */}
+              {/* Primary Dark Action Button */}
               <button
                 type="submit"
                 disabled={isLoading}
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 text-base font-semibold text-white bg-[#8B9A6E] hover:bg-[#758458] active:scale-[0.98] rounded-2xl shadow-warm-md hover:shadow-warm-lg disabled:opacity-75 disabled:cursor-not-allowed transition-all duration-200 shrink-0"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-bold text-white bg-zinc-900 hover:bg-zinc-800 active:scale-[0.98] rounded-2xl shadow-lg shadow-zinc-950/20 hover:shadow-xl border border-zinc-800 disabled:opacity-75 disabled:cursor-not-allowed transition-all duration-200 shrink-0 cursor-pointer whitespace-nowrap"
               >
                 {isLoading ? (
                   <>
@@ -146,7 +146,7 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                 ) : (
                   <>
                     <span>Generate Transcript</span>
-                    <Sparkles className="w-4 h-4 text-white/90" />
+                    <Sparkles className="w-4 h-4 text-amber-300" />
                   </>
                 )}
               </button>
@@ -161,7 +161,7 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                   ? 'bg-red-50 border-red-200 text-red-700'
                   : statusType === 'success'
                   ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
-                  : 'bg-[#8B9A6E]/10 border-[#8B9A6E]/30 text-[#2E3622]'
+                  : 'bg-zinc-900/10 border-zinc-800/20 text-zinc-900'
               }`}
             >
               <div className="flex items-start gap-2.5">
@@ -170,9 +170,9 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                 ) : statusType === 'success' ? (
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 ) : (
-                  <Sparkles className="w-4 h-4 text-[#8B9A6E] shrink-0 mt-0.5" />
+                  <Sparkles className="w-4 h-4 text-zinc-900 shrink-0 mt-0.5" />
                 )}
-                <span className="leading-relaxed font-medium">{statusMessage}</span>
+                <span className="leading-relaxed font-semibold">{statusMessage}</span>
               </div>
               {onDismissStatusMessage && (
                 <button
@@ -181,7 +181,7 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                   className={`p-1 rounded-lg transition-colors shrink-0 ${
                     statusType === 'error'
                       ? 'text-red-500 hover:text-red-700'
-                      : 'text-[#5D6B44] hover:text-[#1B1E19]'
+                      : 'text-zinc-700 hover:text-black'
                   }`}
                   aria-label="Dismiss message"
                 >
@@ -192,9 +192,9 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
           )}
 
           {/* Sample Link Helpers */}
-          <div className="mt-5 pt-5 border-t border-[#EFE9DE] flex flex-wrap items-center justify-between gap-2.5 text-xs text-[#595F52]">
-            <div className="flex items-center gap-1.5 font-medium text-[#767D6E]">
-              <Link2 className="w-3.5 h-3.5" />
+          <div className="mt-5 pt-5 border-t border-[#EFE9DE] flex flex-wrap items-center justify-between gap-3 text-xs text-[#595F52]">
+            <div className="flex items-center gap-1.5 font-semibold text-zinc-700">
+              <Link2 className="w-3.5 h-3.5 text-zinc-900" />
               <span>Or try a sample link:</span>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -203,7 +203,7 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
                   key={sample.label}
                   type="button"
                   onClick={() => handleSelectSample(sample.url)}
-                  className="px-2.5 py-1 rounded-lg bg-[#F7F2EB] hover:bg-[#EAE3D6] border border-[#E8E1D5] text-[#282C24] font-medium transition-colors"
+                  className="px-3 py-1.5 rounded-xl bg-white hover:bg-zinc-900 hover:text-white border border-zinc-300 text-zinc-800 font-semibold transition-all shadow-xs cursor-pointer"
                 >
                   {sample.label}
                 </button>
@@ -215,3 +215,4 @@ export const TranscriptGenerator: React.FC<TranscriptGeneratorProps> = ({
     </section>
   );
 };
+
